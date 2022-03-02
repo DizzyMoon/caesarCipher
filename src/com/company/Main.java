@@ -1,16 +1,18 @@
 package com.company;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
 
-  char[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','Æ','Ø','Å'};
+  public char[] getAlphabet() {
+    char[] alphabet = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Æ', 'Ø', 'Å'};
+    return alphabet;
+  }
 
-  public int arrayIndexOf(char[] arrayIn, char input){
-    for(int i = 0; i < arrayIn.length; i++){
-      if (arrayIn[i] == input){
+  public int arrayIndexOf(char[] arrayIn, char input) {
+    for (int i = 0; i < arrayIn.length; i++) {
+      if (arrayIn[i] == input) {
         return i;
       }
     }
@@ -19,57 +21,116 @@ public class Main {
 
   public int charToNum(char input) {
     if (!(input == ' ')) {
-      return arrayIndexOf(alphabet, input) + 1;
+      return arrayIndexOf(getAlphabet(), input) + 1;
     } else return 0;
   }
 
   public char numToChar(int input) {
     if (!(input == 0)) {
-      return alphabet[input - 1];
+      return getAlphabet()[input - 1];
     } else return ' ';
   }
 
-  public char[] stringToArray(String input){
-    return input.toCharArray();
+  public char[] stringToArray(String input) {
+    return input.toUpperCase().toCharArray();
   }
 
-  public String arrayToString(int[] input){
+  public String arrayToString(int[] input) {
     return Arrays.toString(input);
   }
 
-  public String arrayToString(char[] input){
+  public String arrayToString(char[] input) {
     return Arrays.toString(input);
   }
 
-  public String encrypt(String input, int shift){
+
+  public String decryptString(String input, int shift) {
     char[] charArray = stringToArray(input.toUpperCase());
     int[] intArray = new int[charArray.length];
-    int [] encryptedIntArray = new int[intArray.length];
-    char[] encryptedCharArray = new char[encryptedIntArray.length];
+    int[] decryptedIntArray = new int[intArray.length];
+    char[] decryptedCharArray = new char[decryptedIntArray.length];
+    StringBuilder sb = new StringBuilder();
 
 
-    for (int i = 0; i <= charArray.length; i++){
+    for (int i = 0; i < charArray.length; i++) {
       intArray[i] = charToNum(charArray[i]);
     }
+
     System.out.println("charArray made successfully");
-    for (int i = 0; i <= intArray.length; i++){
-      encryptedIntArray[i] = intArray[i + shift];
+    for (int i = 0; i < intArray.length; i++) {
+      if (!(intArray[i] == 0)) {
+        decryptedIntArray[i] = intArray[i] - shift;
+        if (decryptedIntArray[i] < 1) {
+          decryptedIntArray[i] = decryptedIntArray[i] + 29;
+        }
+      } else {
+        decryptedIntArray[i] = 0;
+      }
     }
+
     System.out.println("intArray made successfully");
-    for (int i = 0; i <= encryptedIntArray.length; i++){
-      encryptedCharArray[i] = numToChar(encryptedIntArray[i]);
+    for (int i = 0; i < decryptedIntArray.length; i++) {
+      decryptedCharArray[i] = numToChar(decryptedIntArray[i]);
     }
     System.out.println("encryptedIntArray made successfully");
-    String encryptedString = arrayToString(encryptedCharArray);
+
+    for (int i = 0; i < decryptedCharArray.length; i++) {
+      sb.append(decryptedCharArray[i]);
+    }
+
+    String encryptedString = String.valueOf(sb);
+
+    System.out.println("encrypted String made successfully");
 
     return encryptedString;
   }
 
+  public String encryptString(String input, int shift) {
+    char[] charArray = stringToArray(input.toUpperCase());
+    int[] intArray = new int[charArray.length];
+    int[] encryptedIntArray = new int[intArray.length];
+    char[] encryptedCharArray = new char[encryptedIntArray.length];
+    StringBuilder sb = new StringBuilder();
 
-  public void execute(){
+
+    for (int i = 0; i < charArray.length; i++) {
+      intArray[i] = charToNum(charArray[i]);
+    }
+
+    System.out.println("charArray made successfully");
+    for (int i = 0; i < intArray.length; i++) {
+      if (!(intArray[i] == 0)){
+      encryptedIntArray[i] = intArray[i] + shift;
+      if (encryptedIntArray[i] > 29) {
+        encryptedIntArray[i] = encryptedIntArray[i] - 29;
+      }
+      } else {
+        encryptedIntArray[i] = 0;
+      }
+    }
+
+    System.out.println("intArray made successfully");
+    for (int i = 0; i < encryptedIntArray.length; i++) {
+      encryptedCharArray[i] = numToChar(encryptedIntArray[i]);
+    }
+    System.out.println("encryptedIntArray made successfully");
+
+    for (int i = 0; i < encryptedCharArray.length; i++) {
+      sb.append(encryptedCharArray[i]);
+    }
+
+    String encryptedString = String.valueOf(sb);
+
+    System.out.println("encrypted String made successfully");
+
+    return encryptedString;
+  }
+
+  public void execute() {
     boolean validInput = false;
     Scanner sc = new Scanner(System.in);
 
+    System.out.println("Velkommen til Mikkel's Caesar Cipher maskine");
 
     while (!validInput) {
       System.out.println("Do you want to (e)ncrypt or (d)ecrypt?");
@@ -80,10 +141,15 @@ public class Main {
         String input = sc.nextLine();
         System.out.print("Please enter shift value: ");
         int shift = Integer.parseInt(sc.nextLine());
-        System.out.println("Encrypted text: " + encrypt(input, shift));
+        System.out.println("Encrypted text: " + encryptString(input, shift));
 
       } else if (userChoice.equals("d") || userChoice.equals("D")) {
         validInput = true;
+        System.out.print("Please enter text to decrypt: ");
+        String input = sc.nextLine();
+        System.out.print("Please enter shift value: ");
+        int shift = Integer.parseInt(sc.nextLine());
+        System.out.println("Decrypted text: " + decryptString(input, shift));
       } else {
         System.out.println("Please type either \"e\" or \"d\"");
       }
