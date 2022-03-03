@@ -54,18 +54,18 @@ public class Main {
                 decryptedIntArray[i] = 0;
             }
         }
-        return getString(decryptedIntArray, decryptedCharArray, sb);
+        return buildString(decryptedIntArray, decryptedCharArray, sb);
     }
 
-    private String getString(int[] decryptedIntArray, char[] decryptedCharArray, StringBuilder sb) {
+    private String buildString(int[] decryptedIntArray, char[] decryptedCharArray, StringBuilder sb) {
         for (int i = 0; i < decryptedIntArray.length; i++) {
             decryptedCharArray[i] = numToChar(decryptedIntArray[i]);
         }
         for (int i = 0; i < decryptedCharArray.length; i++) {
             sb.append(decryptedCharArray[i]);
         }
-        String encryptedString = String.valueOf(sb);
-        return encryptedString;
+        String output = String.valueOf(sb);
+        return output;
     }
 
     public String encryptString(String input, int shift) {
@@ -88,7 +88,7 @@ public class Main {
                 encryptedIntArray[i] = 0;
             }
         }
-        return getString(encryptedIntArray, encryptedCharArray, sb);
+        return buildString(encryptedIntArray, encryptedCharArray, sb);
     }
 
     public void execute() {
