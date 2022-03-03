@@ -24,14 +24,25 @@ public class Main {
         } else return 0;
     }
 
+    public char[] stringToArray(String input) {
+        return input.toUpperCase().toCharArray();
+    }
+
     public char numToChar(int input) {
         if (!(input == 0)) {
             return getAlphabet()[input - 1];
         } else return ' ';
     }
 
-    public char[] stringToArray(String input) {
-        return input.toUpperCase().toCharArray();
+    public String buildString(int[] decryptedIntArray, char[] decryptedCharArray, StringBuilder sb) {
+        for (int i = 0; i < decryptedIntArray.length; i++) {
+            decryptedCharArray[i] = numToChar(decryptedIntArray[i]);
+        }
+        for (int i = 0; i < decryptedCharArray.length; i++) {
+            sb.append(decryptedCharArray[i]);
+        }
+        String output = String.valueOf(sb);
+        return output;
     }
 
     public String decryptString(String input, int shift) {
@@ -55,17 +66,6 @@ public class Main {
             }
         }
         return buildString(decryptedIntArray, decryptedCharArray, sb);
-    }
-
-    private String buildString(int[] decryptedIntArray, char[] decryptedCharArray, StringBuilder sb) {
-        for (int i = 0; i < decryptedIntArray.length; i++) {
-            decryptedCharArray[i] = numToChar(decryptedIntArray[i]);
-        }
-        for (int i = 0; i < decryptedCharArray.length; i++) {
-            sb.append(decryptedCharArray[i]);
-        }
-        String output = String.valueOf(sb);
-        return output;
     }
 
     public String encryptString(String input, int shift) {
