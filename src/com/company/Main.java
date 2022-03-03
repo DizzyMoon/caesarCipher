@@ -110,15 +110,15 @@ public class Main {
                     System.out.print("Please enter text to encrypt: ");
                     String input = sc.nextLine();
                     System.out.print("Please enter shift value: ");
-                    int shift = Integer.parseInt(sc.nextLine());
-                    System.out.println("Encrypted text: " + encryptString(input, shift));
+                    int key = Integer.parseInt(sc.nextLine());
+                    System.out.println("Encrypted text: " + encryptString(input, key));
                 } else if (userChoice.equals("d") || userChoice.equals("D")) {
                     validInput = true;
                     System.out.print("Please enter text to decrypt: ");
                     String input = sc.nextLine();
                     System.out.print("Please enter key value: ");
                     int key = Integer.parseInt(sc.nextLine());
-                    System.out.println("Decrypted text: " + decryptString(input, key));
+                        System.out.println("Decrypted text: " + decryptString(input, key));
                 } else {
                     System.out.println("Please type either \"e\" or \"d\"");
                 }
